@@ -68,7 +68,7 @@ const ProductDetails = ({ product, products }) => {
             </div>
 
             <div className="maylike-products-wrapper">
-                <h2>You may also like</h2>
+                <h2>You May Also Like</h2>
                 <div className="marquee">
                     <div className="maylike-products-container track">
                         {products.map((item) => (
@@ -86,16 +86,11 @@ export const getStaticPaths = async () => {
     slug {
       current
     }
-  }
-  `;
-
-    const products = await client.fetch(query);
-
+  }`
+    const products = await client.fetch(query)
     const paths = products.map((product) => ({
-        params: {
-            slug: product.slug.current
-        }
-    }));
+        params: { slug: product.slug.current }
+    }))
 
     return {
         paths,
@@ -105,12 +100,10 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { slug } }) => {
     const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
-    const productsQuery = '*[_type == "product"]'
-
     const product = await client.fetch(query);
-    const products = await client.fetch(productsQuery);
 
-    console.log(product);
+    const productsQuery = `*[_type == "product"]`    
+    const products = await client.fetch(productsQuery);
 
     return {
         props: { products, product }
